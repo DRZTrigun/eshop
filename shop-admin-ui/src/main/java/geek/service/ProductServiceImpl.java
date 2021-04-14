@@ -63,6 +63,7 @@ public class ProductServiceImpl implements ProductService, Serializable {
         product.setCategory(productRepr.getCategory());
         product.setBrand(productRepr.getBrand());
         product.setPrice(productRepr.getPrice());
+        product.setDescription(productRepr.getDescription());
 
         if (productRepr.getNewPictures() != null) {
             for (MultipartFile newPicture : productRepr.getNewPictures()) {

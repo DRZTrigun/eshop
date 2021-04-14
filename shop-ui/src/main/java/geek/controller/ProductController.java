@@ -1,13 +1,16 @@
 package geek.controller;
 
-import geek.service.ProductServiceUi;
+import geek.error.NotFoundException;
+import geek.persist.repo.CategoryRepository;
+import geek.service.ProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping
@@ -15,27 +18,33 @@ public class ProductController {
 
     private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
 
-    private final ProductServiceUi productServiceUi;
+    private final ProductService productService;
 
-    @Autowired
-    public ProductController(ProductServiceUi productServiceUi) {
-        this.productServiceUi = productServiceUi;
+    private final CategoryRepository categoryRepository;
+
+    public ProductController(ProductService productService, CategoryRepository categoryRepository) {
+        this.productService = productService;
+        this.categoryRepository = categoryRepository;
     }
 
-    @RequestMapping("/categories-sidebar")
-    public String productsListPage(Model model){
-        logger.info("Products list page");
-        model.addAttribute("activePage", "Categories-sidebar");
-        model.addAttribute("categories-sidebar", productServiceUi.findAll());
+    @GetMapping
+    public String productListPage(@RequestParam(value = "categoryId", required = false) Long categoryId,
+                                  Model model) {
+        logger.info("Product list page");
+
+        model.addAttribute("categories", categoryRepository.findAll());
+        model.addAttribute("products", productService.findByFilter(categoryId));
+
         return "categories-sidebar";
     }
 
-    @RequestMapping("/categories-sidebar/product-details")
-    public String productPage(Model model, @PathVariable("id") Long id){
-        logger.info("Product page");
-        model.addAttribute("activePage", "Categories-sidebar");
-        model.addAttribute("categories-sidebar/product-details", productServiceUi.findById(id));
-        return "categories-sidebar/product-details";
+    @GetMapping("/product/{id}")
+    public String productPage(@PathVariable("id") Long id, Model model) {
+        logger.info("Product page {}", id);
+
+        model.addAttribute("product", productService.findById(id).orElseThrow(NotFoundException::new));
+
+        return "product-details";
     }
 
 }
