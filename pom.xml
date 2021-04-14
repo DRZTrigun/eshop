@@ -10,6 +10,7 @@
         <version>2.4.4</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+
     <groupId>geek</groupId>
     <artifactId>geek-eshop-v-1.1</artifactId>
     <version>1.0-SNAPSHOT</version>
