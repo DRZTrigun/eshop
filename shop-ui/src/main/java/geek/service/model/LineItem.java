@@ -37,11 +37,11 @@ public class LineItem implements Serializable {
         this.productId = productId;
     }
 
-    public ProductRepr getProductReprUi() {
+    public ProductRepr getProductRepr() {
         return productRepr;
     }
 
-    public void setProductReprUi(ProductRepr productRepr) {
+    public void setProductRepr(ProductRepr productRepr) {
         this.productRepr = productRepr;
     }
 
@@ -89,4 +89,14 @@ public class LineItem implements Serializable {
         return Objects.hash(productId, color, material);
     }
 
+    @Override
+    public String toString() {
+        return "LineItem{" +
+                "productId=" + productId +
+                ", productRepr=" + productRepr +
+                ", qty=" + qty +
+                ", color='" + color + '\'' +
+                ", material='" + material + '\'' +
+                '}';
+    }
 }
