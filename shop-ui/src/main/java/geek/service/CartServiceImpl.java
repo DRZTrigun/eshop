@@ -64,6 +64,7 @@ public class CartServiceImpl implements CartService, Serializable {
 
     @Override
     public void removeProduct(Long productId) {
+        logger.info("");
         lineItems = lineItems
                 .entrySet()
                 .stream()
