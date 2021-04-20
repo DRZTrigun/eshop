@@ -17,11 +17,15 @@ public final class ProductSpecification {
                 -> criteriaBuilder.equal(root.get("category").get("id"), categoryId));
     }
 
-    public static Specification<Product> fetchPictures(){
-        return (root, criteriaQuery, criteriaBuilder) -> {
-            root.fetch("pictures", JoinType.LEFT);
-            criteriaQuery.distinct(true);
-            return criteriaBuilder.isTrue(criteriaBuilder.literal(true));
+    public static Specification<Product> fetchPictures() {
+        return (root, query, builder) -> {
+            // Don't do fetch in case of count() query for pagination
+            if (query.getResultType() != Long.class && query.getResultType() != long.class) {
+                root.fetch("pictures", JoinType.LEFT);
+                root.fetch("brand", JoinType.LEFT);
+                query.distinct(true);
+            }
+            return builder.isTrue(builder.literal(true));
         };
     }
 }

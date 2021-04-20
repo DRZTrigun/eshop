@@ -5,17 +5,21 @@ import geek.controller.repr.ProductRepr;
 import geek.error.NotFoundException;
 import geek.service.CartService;
 import geek.service.ProductService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/cart")
 public class CartController {
+
+    private static final Logger logger = LoggerFactory.getLogger(CartController.class);
 
     public final CartService cartService;
 
@@ -41,9 +45,22 @@ public class CartController {
         return "redirect:/cart";
     }
 
-    @DeleteMapping
-    public String removeLineItem(){
-        cartService.removeLineItem();
-        return "cart";
+    @DeleteMapping(path = "/delete")
+    public String delete(@RequestParam("productId") long productId){
+        logger.info("{}", productId);
+        cartService.removeProduct(productId);
+        logger.info("{}", cartService);
+        return "redirect:/cart";
+    }
+
+    @PostMapping(path = "/update_all_qty")
+    public String updateAllQty(@RequestParam Map<String, String> paramMapStr){
+        Map<Long, Integer> paramMap = paramMapStr
+                .entrySet()
+                .stream()
+                .collect(Collectors.toMap(e -> Long.valueOf(e.getKey()), e -> Integer.valueOf(e.getValue())));
+        logger.info("Product Qty Map: {}", paramMap);
+        cartService.updateAllQty(paramMap);
+        return "redirect:/cart";
     }
 }

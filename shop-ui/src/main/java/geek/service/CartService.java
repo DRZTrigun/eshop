@@ -3,7 +3,9 @@ package geek.service;
 import geek.controller.repr.ProductRepr;
 import geek.service.model.LineItem;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 public interface CartService {
 
@@ -13,5 +15,10 @@ public interface CartService {
 
     List<LineItem> getLineItems();
 
-    List<LineItem> removeLineItem();
+    void updateAllQty(Map<Long, Integer> paramMap);
+
+    void removeProduct(Long productId);
+
+    BigDecimal getSubTotal();
+
 }

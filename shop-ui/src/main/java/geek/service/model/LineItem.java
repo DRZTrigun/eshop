@@ -89,4 +89,14 @@ public class LineItem implements Serializable {
         return Objects.hash(productId, color, material);
     }
 
+    @Override
+    public String toString() {
+        return "LineItem{" +
+                "productId=" + productId +
+                ", productRepr=" + productRepr +
+                ", qty=" + qty +
+                ", color='" + color + '\'' +
+                ", material='" + material + '\'' +
+                '}';
+    }
 }
