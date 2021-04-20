@@ -44,14 +44,14 @@
                                     <td>
                                         <div class="media">
                                             <div class="d-flex">
-                                                <img th:src="@{/picture/{id}(id = ${lineItem.productReprUi.pictureId})}" alt="" width="30%">
+                                                <img th:src="@{/picture/{id}(id = ${lineItem.productRepr.pictureId})}" alt="" width="30%">
                                             </div>
                                             <div class="media-body">
-                                                <h4>[[${lineItem.productReprUi.title}]]</h4>
+                                                <h4>[[${lineItem.productRepr.title}]]</h4>
                                             </div>
                                         </div>
                                     </td>
-                                    <td><p>[[${lineItem.productReprUi.price}]]</p>Rub</td>
+                                    <td><p>[[${lineItem.productRepr.price}]]</p>Rub</td>
                                     <td><input type="text" th:name="${lineItem.productId}" th:value="${lineItem.qty}"></td>
                                     <td><p>[[${lineItem.total}]]</p>Rub</td>
                                 </tr>

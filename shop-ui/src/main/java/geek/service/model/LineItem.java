@@ -37,11 +37,11 @@ public class LineItem implements Serializable {
         this.productId = productId;
     }
 
-    public ProductRepr getProductReprUi() {
+    public ProductRepr getProductRepr() {
         return productRepr;
     }
 
-    public void setProductReprUi(ProductRepr productRepr) {
+    public void setProductRepr(ProductRepr productRepr) {
         this.productRepr = productRepr;
     }
 
