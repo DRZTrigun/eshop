@@ -7,6 +7,7 @@
         <artifactId>geek-eshop-v-1.1</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
+
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>shop-database</artifactId>
@@ -62,18 +63,18 @@
             <plugin>
                 <groupId>org.liquibase</groupId>
                 <artifactId>liquibase-maven-plugin</artifactId>
-                <version>4.3.1</version>
+                <version>${liquibase.version}</version>
                 <configuration>
                     <propertyFile>target/classes/liquibase-maven-plugin.properties</propertyFile>
                     <systemProperties>
-                        <user.name>DRZTrigun</user.name>
+                        <user.name>drztrigun</user.name>
                     </systemProperties>
                 </configuration>
                 <dependencies>
                     <dependency>
                         <groupId>org.liquibase.ext</groupId>
                         <artifactId>liquibase-hibernate5</artifactId>
-                        <version>4.3.1</version>
+                        <version>${liquibase.version}</version>
                     </dependency>
                     <dependency>
                         <groupId>org.springframework.boot</groupId>
