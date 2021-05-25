@@ -5,6 +5,7 @@ import geek.controller.repr.ProductRepr;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Map;
 import java.util.Objects;
 
 public class LineItem implements Serializable {
@@ -18,9 +19,6 @@ public class LineItem implements Serializable {
     private String color;
 
     private String material;
-
-    public LineItem() {
-    }
 
     public LineItem(ProductRepr productRepr, String color, String material) {
         this.productId = productRepr.getId();
