@@ -6,18 +6,20 @@ import java.util.List;
 
 public class ProductRepr implements Serializable {
 
-    private final Long id;
+    private Long id;
 
-    private final String title;
+    private String title;
 
-    private final BigDecimal price;
+    private BigDecimal price;
 
-    private final String description;
+    private String description;
 
-    private final Long pictureId;
+    private Long pictureId;
 
-    private final List<Long> pictureIds;
+    private List<Long> pictureIds;
 
+    public ProductRepr() {
+    }
 
     public ProductRepr(Long id, String title, BigDecimal price, String description,
                        Long pictureId, List<Long> pictureIds) {
@@ -29,27 +31,52 @@ public class ProductRepr implements Serializable {
         this.pictureIds = pictureIds;
     }
 
+
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTitle() {
         return title;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public BigDecimal getPrice() {
         return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
     public String getDescription() {
         return description;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public Long getPictureId() {
         return pictureId;
     }
 
+    public void setPictureId(Long pictureId) {
+        this.pictureId = pictureId;
+    }
+
     public List<Long> getPictureIds() {
         return pictureIds;
+    }
+
+    public void setPictureIds(List<Long> pictureIds) {
+        this.pictureIds = pictureIds;
     }
 }

@@ -1,5 +1,6 @@
 package geek.service;
 
+import geek.aspect.TrackTime;
 import geek.controller.repr.UserRepr;
 import geek.persist.model.User;
 import geek.persist.repo.UserRepository;
@@ -35,6 +36,7 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
+    @TrackTime
     @Override
     public List<UserRepr> findAll() {
         return userRepository.findAll().stream()

@@ -1,5 +1,6 @@
 package geek.service;
 
+import geek.aspect.TrackTime;
 import geek.controller.repr.ProductRepr;
 import geek.error.NotFoundException;
 import geek.persist.model.Picture;
@@ -34,6 +35,7 @@ public class ProductServiceImpl implements ProductService, Serializable {
         this.pictureService = pictureService;
     }
 
+    @TrackTime
     @Override
     @Transactional
     public List<ProductRepr> findAll() {

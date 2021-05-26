@@ -45,11 +45,9 @@ public class CartController {
         return "redirect:/cart";
     }
 
-    @DeleteMapping(path = "/delete")
-    public String delete(@RequestParam("productId") long productId){
-        logger.info("{}", productId);
-        cartService.removeProduct(productId);
-        logger.info("{}", cartService);
+    @DeleteMapping
+    public String delete(@RequestParam("productId") Long productId) {
+        cartService.removeProduct(new ProductRepr(productId, null, null, null, null, null), "", "");
         return "redirect:/cart";
     }
 

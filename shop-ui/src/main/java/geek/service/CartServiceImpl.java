@@ -1,6 +1,8 @@
 package geek.service;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import geek.controller.repr.ProductRepr;
 import geek.service.model.LineItem;
 import org.slf4j.Logger;
@@ -12,7 +14,6 @@ import org.springframework.stereotype.Service;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @Service
@@ -21,7 +22,16 @@ public class CartServiceImpl implements CartService, Serializable {
 
     private static final Logger logger = LoggerFactory.getLogger(CartServiceImpl.class);
 
-    private Map<LineItem, Integer> lineItems = new ConcurrentHashMap<>();
+    private final Map<LineItem, Integer> lineItems;
+
+    public CartServiceImpl(){
+        this.lineItems = new HashMap<>();
+    }
+
+    @JsonCreator
+    public CartServiceImpl(@JsonProperty("lineItems") List<LineItem> lineItems) {
+        this.lineItems = lineItems.stream().collect(Collectors.toMap(li -> li, LineItem::getQty));
+    }
 
     @Override
     public void addProductQty(ProductRepr productRepr, String color, String material, int qty) {
@@ -48,7 +58,7 @@ public class CartServiceImpl implements CartService, Serializable {
 
     @Override
     public void updateAllQty(Map<Long, Integer> paramMap) {
-        lineItems = lineItems.entrySet()
+        lineItems.entrySet()
                 .stream()
                 .filter(e -> {
                     Long productId = e.getKey().getProductId();
@@ -63,18 +73,18 @@ public class CartServiceImpl implements CartService, Serializable {
     }
 
     @Override
-    public void removeProduct(Long productId) {
-        lineItems = lineItems
-                .entrySet()
-                .stream()
-                .filter(e -> !e.getKey().getProductId().equals(productId))
-                .collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue()));
+    public void removeProduct(ProductRepr productRepr, String color, String material) {
+        LineItem lineItem = new LineItem(productRepr, color, material);
+        lineItems.remove(lineItem);
     }
 
     @JsonIgnore
     @Override
     public BigDecimal getSubTotal() {
-        return null;
+        lineItems.forEach(LineItem::setQty);
+        return  lineItems.keySet().stream()
+                .map(LineItem::getTotal)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
 }

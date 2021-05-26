@@ -17,7 +17,7 @@ public interface CartService {
 
     void updateAllQty(Map<Long, Integer> paramMap);
 
-    void removeProduct(Long productId);
+    void removeProduct(ProductRepr productRepr, String color, String material);
 
     BigDecimal getSubTotal();
 
